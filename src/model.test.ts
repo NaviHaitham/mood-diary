@@ -19,12 +19,21 @@ describe('日记统计与备份', () => {
   });
   it('校验备份，拒绝越界强度、未知情绪和重复编号', () => {
     expect(parseBackup({ version: 1, ...data })).toEqual(data);
-    expect(() => parseBackup({ version: 1, ...data, entries: [{ ...data.entries[0], intensity: 6 }] })).toThrow();
-    expect(() => parseBackup({ version: 1, ...data, entries: [{ ...data.entries[0], moods: ['unknown'] }] })).toThrow();
-    expect(() => parseBackup({ version: 1, ...data, entries: [data.entries[0], data.entries[0]] })).toThrow();
+    expect(() =>
+      parseBackup({ version: 1, ...data, entries: [{ ...data.entries[0], intensity: 6 }] }),
+    ).toThrow();
+    expect(() =>
+      parseBackup({ version: 1, ...data, entries: [{ ...data.entries[0], moods: ['unknown'] }] }),
+    ).toThrow();
+    expect(() =>
+      parseBackup({ version: 1, ...data, entries: [data.entries[0], data.entries[0]] }),
+    ).toThrow();
   });
   it('不舒服的反馈会降低对应活动排序', () => {
-    const ranked = recommendations([], [{ id: 'test', date: now.toISOString(), activityId: 'breathe', feedback: 'worse' }]);
+    const ranked = recommendations(
+      [],
+      [{ id: 'test', date: now.toISOString(), activityId: 'breathe', feedback: 'worse' }],
+    );
     expect(ranked.at(-1)?.id).toBe('breathe');
   });
   it('IndexedDB 写入后可重新读取，清空后不残留个人记录', async () => {
@@ -36,7 +45,9 @@ describe('日记统计与备份', () => {
   });
   it('写入前校验失败，不覆盖已有的有效记录', async () => {
     await saveData(data);
-    await expect(saveData({ ...data, entries: [{ ...data.entries[0], intensity: 99 }] })).rejects.toThrow();
+    await expect(
+      saveData({ ...data, entries: [{ ...data.entries[0], intensity: 99 }] }),
+    ).rejects.toThrow();
     expect(await loadData()).toEqual(data);
     await saveData({ entries: [], sessions: [] });
   });

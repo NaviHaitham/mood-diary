@@ -7,56 +7,198 @@ export const moods = [
   { id: 'tired', label: '疲惫', face: '﹏', color: '#a3927d', soft: '#f0ece6' },
 ] as const;
 
-export type MoodId = typeof moods[number]['id'];
-export type Entry = { id: string; date: string; moods: MoodId[]; intensity: number; tags: string[]; text: string };
+export type MoodId = (typeof moods)[number]['id'];
+export type Entry = {
+  id: string;
+  date: string;
+  moods: MoodId[];
+  intensity: number;
+  tags: string[];
+  text: string;
+};
 export type Feedback = 'better' | 'same' | 'worse';
 export type Session = { id: string; date: string; activityId: string; feedback: Feedback };
 export type JournalData = { entries: Entry[]; sessions: Session[] };
 export const tags = ['学业', '工作', '人际', '家庭', '睡眠', '身体', '生活小事'];
-export const feedbackLabels: Record<Feedback, string> = { better: '舒服一些', same: '差不多', worse: '更不舒服' };
+export const feedbackLabels: Record<Feedback, string> = {
+  better: '舒服一些',
+  same: '差不多',
+  worse: '更不舒服',
+};
 export const emptyData = (): JournalData => ({ entries: [], sessions: [] });
 
 export const activities = [
-  { id: 'breathe', name: '给自己一次深呼吸', type: '冥想', minutes: 2, icon: 'wind', tone: 'sage', subtitle: '跟随圆的节奏，慢慢回到当下', quiet: true, steps: ['找一个舒服的姿势，让双肩自然放松。', '跟随动画自然呼吸，无需屏息或用力。', '注意此刻的感受，走神也没有关系。'] },
-  { id: 'rain', name: '在雨声里，停一会儿', type: '音乐', minutes: 5, icon: 'rain', tone: 'blue', subtitle: '一段雨声，让思绪有处安放', quiet: false, steps: ['把音量调到舒适的大小。', '点击播放，聆听浏览器合成的雨声；也可以静静休息。', '注意身边的声音，让想法自然经过。'] },
-  { id: 'stretch', name: '让肩膀轻一点', type: '运动', minutes: 2, icon: 'move', tone: 'peach', subtitle: '离开屏幕，轻轻舒展身体', quiet: true, steps: ['选择安全、能自由活动的空间。', '按自己舒适的幅度轻轻活动肩膀、手腕，或站起来走动。', '感到不适时立即停止，随时可以坐下休息。'] },
-  { id: 'ground', name: '发现身边的小美好', type: '冥想', minutes: 5, icon: 'leaf', tone: 'sand', subtitle: '把注意力交还给眼前的生活', quiet: true, steps: ['看看周围，找出三样你注意到的东西。', '感受脚下的地面，留意手边物品的触感。', '为自己留一段不需要完成任务的时间。'] },
-  { id: 'walk', name: '去散一小会儿步', type: '运动', minutes: 10, icon: 'sun', tone: 'sage', subtitle: '以自己的步调，感受一点新鲜空气', quiet: true, steps: ['选择安全的路线，也可以在室内缓缓走动。', '用舒适的速度走，留意周围和身体的感受。', '无需追求距离和步数，想休息时就停下来。'] },
+  {
+    id: 'breathe',
+    name: '给自己一次深呼吸',
+    type: '冥想',
+    minutes: 2,
+    icon: 'wind',
+    tone: 'sage',
+    subtitle: '跟随圆的节奏，慢慢回到当下',
+    quiet: true,
+    steps: [
+      '找一个舒服的姿势，让双肩自然放松。',
+      '跟随动画自然呼吸，无需屏息或用力。',
+      '注意此刻的感受，走神也没有关系。',
+    ],
+  },
+  {
+    id: 'rain',
+    name: '在雨声里，停一会儿',
+    type: '音乐',
+    minutes: 5,
+    icon: 'rain',
+    tone: 'blue',
+    subtitle: '一段雨声，让思绪有处安放',
+    quiet: false,
+    steps: [
+      '把音量调到舒适的大小。',
+      '点击播放，聆听浏览器合成的雨声；也可以静静休息。',
+      '注意身边的声音，让想法自然经过。',
+    ],
+  },
+  {
+    id: 'stretch',
+    name: '让肩膀轻一点',
+    type: '运动',
+    minutes: 2,
+    icon: 'move',
+    tone: 'peach',
+    subtitle: '离开屏幕，轻轻舒展身体',
+    quiet: true,
+    steps: [
+      '选择安全、能自由活动的空间。',
+      '按自己舒适的幅度轻轻活动肩膀、手腕，或站起来走动。',
+      '感到不适时立即停止，随时可以坐下休息。',
+    ],
+  },
+  {
+    id: 'ground',
+    name: '发现身边的小美好',
+    type: '冥想',
+    minutes: 5,
+    icon: 'leaf',
+    tone: 'sand',
+    subtitle: '把注意力交还给眼前的生活',
+    quiet: true,
+    steps: [
+      '看看周围，找出三样你注意到的东西。',
+      '感受脚下的地面，留意手边物品的触感。',
+      '为自己留一段不需要完成任务的时间。',
+    ],
+  },
+  {
+    id: 'walk',
+    name: '去散一小会儿步',
+    type: '运动',
+    minutes: 10,
+    icon: 'sun',
+    tone: 'sage',
+    subtitle: '以自己的步调，感受一点新鲜空气',
+    quiet: true,
+    steps: [
+      '选择安全的路线，也可以在室内缓缓走动。',
+      '用舒适的速度走，留意周围和身体的感受。',
+      '无需追求距离和步数，想休息时就停下来。',
+    ],
+  },
 ] as const;
-export type Activity = typeof activities[number];
+export type Activity = (typeof activities)[number];
 
 export function dayKey(date: string | Date): string {
   const d = new Date(date);
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
-export function inDays<T extends { date: string }>(items: T[], days: number, now = new Date()): T[] {
-  const start = new Date(now); start.setHours(0, 0, 0, 0); start.setDate(start.getDate() - days + 1);
-  return items.filter(item => { const time = new Date(item.date).getTime(); return time >= start.getTime() && time <= now.getTime(); });
+export function inDays<T extends { date: string }>(
+  items: T[],
+  days: number,
+  now = new Date(),
+): T[] {
+  const start = new Date(now);
+  start.setHours(0, 0, 0, 0);
+  start.setDate(start.getDate() - days + 1);
+  return items.filter((item) => {
+    const time = new Date(item.date).getTime();
+    return time >= start.getTime() && time <= now.getTime();
+  });
 }
 export function tagCounts(entries: Entry[]) {
   const counts = new Map<string, number>();
-  for (const entry of entries) for (const tag of new Set(entry.tags)) counts.set(tag, (counts.get(tag) ?? 0) + 1);
+  for (const entry of entries)
+    for (const tag of new Set(entry.tags)) counts.set(tag, (counts.get(tag) ?? 0) + 1);
   return [...counts].sort((a, b) => b[1] - a[1]);
+}
+export function filterEntries(
+  entries: Entry[],
+  filter: { mood: string; query: string; days: number | null; tag: string },
+  now = new Date(),
+) {
+  const scoped = filter.days ? inDays(entries, filter.days, now) : entries;
+  const query = filter.query.trim().toLocaleLowerCase();
+  return [...scoped]
+    .filter(
+      (e) =>
+        (filter.mood === 'all' || e.moods.includes(filter.mood as MoodId)) &&
+        (!filter.tag || e.tags.includes(filter.tag)) &&
+        `${e.text} ${e.tags.join(' ')}`.toLocaleLowerCase().includes(query),
+    )
+    .sort((a, b) => b.date.localeCompare(a.date));
+}
+
+export function recommendationReason(
+  activity: Activity,
+  entries: Entry[],
+  sessions: Session[],
+): string {
+  const better = sessions.filter(
+    (s) => s.activityId === activity.id && s.feedback === 'better',
+  ).length;
+  const worse = sessions.filter(
+    (s) => s.activityId === activity.id && s.feedback === 'worse',
+  ).length;
+  if (better > worse) return '你曾在这项活动后感到舒服一些，愿意再试一次吗？';
+  const last = [...entries].sort((a, b) => b.date.localeCompare(a.date))[0];
+  if (activity.id === 'breathe' && last?.moods.includes('anxious'))
+    return '最近一次记录里有焦虑，可以先给自己一个短暂的停顿。';
+  if (activity.id === 'stretch' && last?.moods.includes('tired'))
+    return '最近一次记录里有疲惫，可以试着轻轻活动一下。';
+  if (activity.id === 'walk' && last?.moods.includes('sad'))
+    return '最近一次记录里有难过，也许可以换个环境走走。';
+  return `只需 ${activity.minutes} 分钟，按自己的节奏尝试，随时可以停止。`;
 }
 export function trend(entries: Entry[], days: number, now = new Date()) {
   const recent = inDays(entries, days, now);
   return Array.from({ length: days }, (_, index) => {
-    const date = new Date(now); date.setDate(date.getDate() - days + index + 1);
-    const records = recent.filter(e => dayKey(e.date) === dayKey(date));
-    return { date: dayKey(date), label: `${date.getMonth() + 1}/${date.getDate()}`, count: records.length, value: records.length ? records.reduce((sum, e) => sum + e.intensity, 0) / records.length : null };
+    const date = new Date(now);
+    date.setDate(date.getDate() - days + index + 1);
+    const records = recent.filter((e) => dayKey(e.date) === dayKey(date));
+    return {
+      date: dayKey(date),
+      label: `${date.getMonth() + 1}/${date.getDate()}`,
+      count: records.length,
+      value: records.length
+        ? records.reduce((sum, e) => sum + e.intensity, 0) / records.length
+        : null,
+    };
   });
 }
 export function recommendations(entries: Entry[], sessions: Session[]): Activity[] {
   const last = [...entries].sort((a, b) => b.date.localeCompare(a.date))[0];
-  return [...activities].map(activity => {
-    let score = 0;
-    if (last?.moods.includes('anxious') && activity.id === 'breathe') score += 3;
-    if (last?.moods.includes('tired') && activity.id === 'stretch') score += 3;
-    if (last?.moods.includes('sad') && activity.id === 'walk') score += 3;
-    score += sessions.filter(s => s.activityId === activity.id && s.feedback === 'better').length * 2;
-    score -= sessions.filter(s => s.activityId === activity.id && s.feedback === 'worse').length * 2;
-    return { activity, score };
-  }).sort((a, b) => b.score - a.score).map(item => item.activity);
+  return [...activities]
+    .map((activity) => {
+      let score = 0;
+      if (last?.moods.includes('anxious') && activity.id === 'breathe') score += 3;
+      if (last?.moods.includes('tired') && activity.id === 'stretch') score += 3;
+      if (last?.moods.includes('sad') && activity.id === 'walk') score += 3;
+      score +=
+        sessions.filter((s) => s.activityId === activity.id && s.feedback === 'better').length * 2;
+      score -=
+        sessions.filter((s) => s.activityId === activity.id && s.feedback === 'worse').length * 2;
+      return { activity, score };
+    })
+    .sort((a, b) => b.score - a.score)
+    .map((item) => item.activity);
 }
 export function makeDemo(now = new Date()): JournalData {
   const examples: [number, MoodId[], number, string[], string][] = [
@@ -67,31 +209,85 @@ export function makeDemo(now = new Date()): JournalData {
     [2, ['anxious'], 3, ['学业'], '想做的事情很多，今天先完成其中一件就好。'],
     [1, ['calm'], 2, ['生活小事'], '给自己留了十分钟散步。风吹过来的时候，心里安静了一点。'],
   ];
-  return { entries: examples.map(([ago, selected, intensity, selectedTags, text], i) => {
-    const date = new Date(now); date.setDate(date.getDate() - ago); date.setHours(18, 20 + i, 0, 0);
-    return { id: `demo-${i}`, date: date.toISOString(), moods: selected, intensity, tags: selectedTags, text };
-  }), sessions: [] };
+  return {
+    entries: examples.map(([ago, selected, intensity, selectedTags, text], i) => {
+      const date = new Date(now);
+      date.setDate(date.getDate() - ago);
+      date.setHours(18, 20 + i, 0, 0);
+      return {
+        id: `demo-${i}`,
+        date: date.toISOString(),
+        moods: selected,
+        intensity,
+        tags: selectedTags,
+        text,
+      };
+    }),
+    sessions: [],
+  };
 }
 
 export function parseBackup(input: unknown): JournalData {
   if (!input || typeof input !== 'object') throw new Error('备份格式不正确。');
   const data = input as Record<string, unknown>;
-  if (data.version !== 1 || !Array.isArray(data.entries) || !Array.isArray(data.sessions)) throw new Error('请选择心晴导出的 JSON 备份。');
-  if (data.entries.length > 5000 || data.sessions.length > 10000) throw new Error('备份记录数量过多。');
-  const validDate = (d: unknown): d is string => typeof d === 'string' && d.length <= 40 && Number.isFinite(Date.parse(d));
-  const validId = (id: unknown): id is string => typeof id === 'string' && id.length > 0 && id.length < 150;
+  if (data.version !== 1 || !Array.isArray(data.entries) || !Array.isArray(data.sessions))
+    throw new Error('请选择心晴导出的 JSON 备份。');
+  if (data.entries.length > 5000 || data.sessions.length > 10000)
+    throw new Error('备份记录数量过多。');
+  const validDate = (d: unknown): d is string =>
+    typeof d === 'string' && d.length <= 40 && Number.isFinite(Date.parse(d));
+  const validId = (id: unknown): id is string =>
+    typeof id === 'string' && id.length > 0 && id.length < 150;
   const entries: Entry[] = data.entries.map((entry: unknown) => {
     if (!entry || typeof entry !== 'object') throw new Error('日记记录格式不正确。');
     const e = entry as Record<string, unknown>;
-    if (!validId(e.id) || !validDate(e.date) || !Array.isArray(e.moods) || !e.moods.length || e.moods.length > moods.length || !e.moods.every(m => moods.some(item => item.id === m)) || !Number.isInteger(e.intensity) || Number(e.intensity) < 1 || Number(e.intensity) > 5 || !Array.isArray(e.tags) || e.tags.length > 12 || !e.tags.every(t => typeof t === 'string' && t.length <= 30) || typeof e.text !== 'string' || e.text.length > 3000) throw new Error('日记字段不符合要求，原有记录未更改。');
-    return { id: e.id, date: new Date(e.date).toISOString(), moods: [...new Set(e.moods)] as MoodId[], intensity: Number(e.intensity), tags: [...new Set(e.tags)] as string[], text: e.text };
+    if (
+      !validId(e.id) ||
+      !validDate(e.date) ||
+      !Array.isArray(e.moods) ||
+      !e.moods.length ||
+      e.moods.length > moods.length ||
+      !e.moods.every((m) => moods.some((item) => item.id === m)) ||
+      !Number.isInteger(e.intensity) ||
+      Number(e.intensity) < 1 ||
+      Number(e.intensity) > 5 ||
+      !Array.isArray(e.tags) ||
+      e.tags.length > 12 ||
+      !e.tags.every((t) => typeof t === 'string' && t.length <= 30) ||
+      typeof e.text !== 'string' ||
+      e.text.length > 3000
+    )
+      throw new Error('日记字段不符合要求，原有记录未更改。');
+    return {
+      id: e.id,
+      date: new Date(e.date).toISOString(),
+      moods: [...new Set(e.moods)] as MoodId[],
+      intensity: Number(e.intensity),
+      tags: [...new Set(e.tags)] as string[],
+      text: e.text,
+    };
   });
   const sessions: Session[] = data.sessions.map((session: unknown) => {
     if (!session || typeof session !== 'object') throw new Error('活动记录格式不正确。');
     const s = session as Record<string, unknown>;
-    if (!validId(s.id) || !validDate(s.date) || !activities.some(a => a.id === s.activityId) || !['better', 'same', 'worse'].includes(String(s.feedback))) throw new Error('活动字段不符合要求，原有记录未更改。');
-    return { id: s.id, date: new Date(s.date).toISOString(), activityId: String(s.activityId), feedback: s.feedback as Feedback };
+    if (
+      !validId(s.id) ||
+      !validDate(s.date) ||
+      !activities.some((a) => a.id === s.activityId) ||
+      !['better', 'same', 'worse'].includes(String(s.feedback))
+    )
+      throw new Error('活动字段不符合要求，原有记录未更改。');
+    return {
+      id: s.id,
+      date: new Date(s.date).toISOString(),
+      activityId: String(s.activityId),
+      feedback: s.feedback as Feedback,
+    };
   });
-  if (new Set(entries.map(e => e.id)).size !== entries.length || new Set(sessions.map(s => s.id)).size !== sessions.length) throw new Error('备份存在重复记录编号。');
+  if (
+    new Set(entries.map((e) => e.id)).size !== entries.length ||
+    new Set(sessions.map((s) => s.id)).size !== sessions.length
+  )
+    throw new Error('备份存在重复记录编号。');
   return { entries, sessions };
 }

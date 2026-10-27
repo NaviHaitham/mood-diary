@@ -17,13 +17,18 @@ export async function loadData(): Promise<JournalData> {
       const tx = db.transaction('journal', 'readonly');
       const req = tx.objectStore('journal').get('data');
       tx.oncomplete = () => {
-        try { resolve(req.result ? parseBackup({ ...req.result, version: 1 }) : emptyData()); }
-        catch { reject(new Error('本地记录无法读取。请勿清理浏览器数据，可先尝试刷新。')); }
+        try {
+          resolve(req.result ? parseBackup({ ...req.result, version: 1 }) : emptyData());
+        } catch {
+          reject(new Error('本地记录无法读取。请勿清理浏览器数据，可先尝试刷新。'));
+        }
       };
       tx.onerror = () => reject(new Error('读取失败，请重试。'));
       tx.onabort = () => reject(new Error('读取已中断，请重试。'));
     });
-  } finally { db.close(); }
+  } finally {
+    db.close();
+  }
 }
 export async function saveData(data: JournalData): Promise<void> {
   const validated = parseBackup({ version: 1, ...data });
@@ -36,5 +41,7 @@ export async function saveData(data: JournalData): Promise<void> {
       tx.onerror = () => reject(new Error('保存失败，本地空间可能不足。请导出备份后重试。'));
       tx.onabort = () => reject(new Error('保存已中断，请重试。'));
     });
-  } finally { db.close(); }
+  } finally {
+    db.close();
+  }
 }
