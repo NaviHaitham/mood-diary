@@ -1394,7 +1394,7 @@ export default function App() {
           <div className="about-note">
             <CircleHelp size={16} />
             <p>
-              心晴 v0.2 ·
+              心晴 v0.3 ·
               原型版。趋势与推荐使用可解释规则，未接入大模型。网页可远程访问，个人数据不跨设备同步。
             </p>
           </div>
